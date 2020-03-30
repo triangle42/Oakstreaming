@@ -5,7 +5,7 @@ module.exports = OakStreaming;
 
 
  /**
- * This constructor creates a OakStreaming instance. OakStreaming instances can seed and/or receive and/or relay video streams.
+ * This constructor creates an OakStreaming instance. OakStreaming instances can seed and/or receive and/or relay video streams.
  * In order to stream a video from one OakStreaming instance to another, a peer-to-peer connection between both OakStreaming instances has to be established.
  * To build up a peer-to-peer connection between two OakStreaming instances, signaling data has to be exchanged between both instances.
  * This exchange of signaling data can happen automatically via a signaling server or manually by using the signaling1, signaling2
@@ -104,7 +104,7 @@ function OakStreaming(OakName){
       /**
        * @typedef Stream_Ticket
        * @type {object}
-       * @property {number} video_file_size - The size in byte of the video file that was passed as the first argument to the create_stream method.
+       * @property {number} video_file_size - The size in bytes of the video file that was passed as the first argument to the create_stream method.
        */
        
       /**
@@ -125,8 +125,8 @@ function OakStreaming(OakName){
        * @param {string[]} [options.webTorrent_trackers] - Array of WebTorrent torrent tracker URLs (strings). One of these torrent trackers will be used to connect to other OakStreaming instances. The OakStreaming client will first try to connect to the torrent tracker URL at index 0 of the array, then to the URL at index 1 and so forth. If this parameter is set to false (not only falsy), the OakStreaming instance will not build up a connection to any torrent tracker. If this parameter is not set, the following URL list will be used: ["wss://tracker.webtorrent.io", "wss://tracker.openwebtorrent.com", "wss://tracker.fastcast.nz", "wss://tracker.btorrent.xyz"]
        * @param {number} [options.sequential_requests_time_range = 20] - How many seconds of video playback must be buffered in advance such that no sequential data streams are requested from the WebTorrent network and instead video fragments are requested according to the rarest-peace-first strategy.
        * @param {number} [options.size_of_sequential_requests = 5000000] - The size of the sequential byte range requests to the WebTorrent network. Keeping the default value is sufficient for most use cases.
-       * @param {number} [options.peer_upload_limit_multiplier = 2] - The OakStreaming client will severely throttle the video data upload to other peers when (bytes_uploaded_to_other_peers * peer_upload_limit_multiplier + peer_upload_limit_addend >  bytes_downloaded_from_other_peers). The OakStreaming client will stop the throttling as soon as the before mentioned inequality is no longer true.
-       * @param {number} [options.peer_upload_limit_addend = 3000000] - The OakStreaming client will severely throttle the video data upload to other peers when (bytes_uploaded_to_other_peers * peer_upload_limit_multiplier + peer_upload_limit_addend >  bytes_downloaded_from_other_peers). The OakStreaming client will stop the throttling as soon as the before mentioned inequality is no longer true.
+       * @param {number} [options.peer_upload_limit_multiplier = 2] - The OakStreaming client will severely throttle the video data upload to other peers when (bytes_uploaded_to_other_peers >=  bytes_downloaded_from_other_peers  * peer_upload_limit_multiplier + peer_upload_limit_addend). The OakStreaming client will stop the throttling as soon as the before mentioned inequality is no longer true.
+       * @param {number} [options.peer_upload_limit_addend = 3000000] - The OakStreaming client will severely throttle the video data upload to other peers when (bytes_uploaded_to_other_peers >=  bytes_downloaded_from_other_peers  * peer_upload_limit_multiplier + peer_upload_limit_addend). The OakStreaming client will stop the throttling as soon as the before mentioned inequality is no longer true.
        * @param {OakStreaming~createStream_finished} callback - This callback function gets called with the generated Stream_Ticket object at the end of the execution of create_stream.
        */
       function create_stream(video_file, options, callback, returnTorrent, destroyTorrent){}

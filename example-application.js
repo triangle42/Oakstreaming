@@ -10,8 +10,8 @@ console.log("This is the live demo");
 window.handleFiles = function (files) {
   streamSource = true;
   // files[0] contains the file from the user
-  // Maybe useful: webTorrent_trackers: [["wss://tracker.webtorrent.io"]]
-  oakStreaming.create_stream(files[0], {web_server_URL: "localhost:9912", webTorrent_trackers: [ "ws://localhost:8085"]}, function(streamInformationObject){      
+  // Maybe useful: webTorrent_trackers: [["wss://tracker.webtorrent.io"]] 
+  oakStreaming.create_stream(files[0], { web_server_URL: "localhost:9912", webTorrent_trackers: ["ws://localhost:8085"]}, function(streamInformationObject){      
     console.log(JSON.stringify(streamInformationObject));
   });
 };
@@ -20,7 +20,8 @@ window.consoleStreamTicket = function consoleStreamTicket(){
   let ticket =  document.getElementById("streamticketTextInput");
   oakStreaming.receive_stream(JSON.parse(ticket.value), theHtmlVideoTag, function () {
     console.log("The full video has been downloaded successfully.")
-  }); 
+  });
+  return false;
 }
 
 function updateChart(){

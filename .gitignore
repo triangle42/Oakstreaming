@@ -6,6 +6,7 @@ bfg.jar
 grassland.mp4
 grassland_for_technical_evaluation.mp4
 sintel-1024-surround.mp4
+sintel_trailer.mp4
 node_modules/
 web/**/index.html
 web/**/example-application.js.map
