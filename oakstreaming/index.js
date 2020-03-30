@@ -1578,9 +1578,9 @@ function OakStreaming(OakName){
       // updateChart();   Only for testing and debugging.
 
       if(HASH_VALUE){
-        Videostream(new FileLike(HASH_VALUE), htmlVideoTag);
+        new Videostream(new FileLike(HASH_VALUE), htmlVideoTag);
       } else {
-        Videostream(new FileLike(PATH_TO_FILE), htmlVideoTag);
+        new Videostream(new FileLike(PATH_TO_FILE), htmlVideoTag);
       }
     }
 

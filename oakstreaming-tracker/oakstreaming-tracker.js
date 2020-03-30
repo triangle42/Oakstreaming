@@ -36,20 +36,19 @@ var tracker = new WebtorrentTracker({
 
 tracker.on('error', function (err) {
   // Fatal server error!
-  console.log(err.message)
+  console.log("Error: " + err.message)
 })
 
 
 tracker.on('warning', function (err) {
   // Client sent bad data. Probably not a problem, just a buggy client.
-  console.log(err.message)
+  console.log("Warning: " + err.message)
 })
 
 
 
 tracker.on('listening', function (){
   // Fires when the WebSocket server is listening.
-
   console.log('The OakStreaming tracker is listening on WebSocket port: ' + tracker.ws.address().port);  
 });
 
