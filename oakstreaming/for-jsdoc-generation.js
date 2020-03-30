@@ -141,7 +141,7 @@ function OakStreaming(OakName){
       /**
        * This method tries to receive the video stream described in the Stream_Ticket object.
        * After this method has been called, the OakStreaming instance offers received video data to all OakStreaming instances with whom it is connected.
-       * The received video data will be streamed into the first HTML video element of the DOM.
+       * The received video data will be streamed into the passed over HTML video element.
        * @public
        * @method
        * @param {Stream_Ticket} stream_ticket - This object contains all data that is needed to initiate downloading the video from other OakStreaming instances and/or a Web server. Stream_Ticket objects can be created by the {@link create_stream|create_stream} method.

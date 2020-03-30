@@ -5,7 +5,7 @@ var streamSource = false;
 var theHtmlVideoTag = document.getElementById("myVideo");  
 
 
-console.log("This is the cool live demo");
+console.log("This is the live demo");
 
 window.handleFiles = function (files) {
   streamSource = true;
@@ -18,7 +18,9 @@ window.handleFiles = function (files) {
 
 window.consoleStreamTicket = function consoleStreamTicket(){
   let ticket =  document.getElementById("streamticketTextInput");
-  oakStreaming.receive_stream(JSON.parse(ticket.value), theHtmlVideoTag); 
+  oakStreaming.receive_stream(JSON.parse(ticket.value), theHtmlVideoTag, function () {
+    console.log("The full video has been downloaded successfully.")
+  }); 
 }
 
 function updateChart(){

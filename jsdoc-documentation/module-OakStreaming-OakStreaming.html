@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -48,7 +48,13 @@
 
 
 <div class="description">
-    This constructor creates a OakStreaming instance. OakStreaming instances can seed and/or receive and/or relay video streams.In order to stream a video from one OakStreaming instance to another, a peer-to-peer connection between both OakStreaming instances has to be established.To build up a peer-to-peer connection between two OakStreaming instances, signaling data has to be exchanged between both instances.This exchange of signaling data can happen automatically via a signaling server or manually by using the signaling1, signaling2and signaling3 methods of the OakStreaming instances. OakStreaming instances can seed a video stream by using the create_stream method.OakStreaming instances can receive, play back and relay a video stream by using the receive_stream method.OakStreaming instances can also (partly) receive a video stream from a Web server via XML HTTP Requests (XHRs).
+    This constructor creates a OakStreaming instance. OakStreaming instances can seed and/or receive and/or relay video streams.
+In order to stream a video from one OakStreaming instance to another, a peer-to-peer connection between both OakStreaming instances has to be established.
+To build up a peer-to-peer connection between two OakStreaming instances, signaling data has to be exchanged between both instances.
+This exchange of signaling data can happen automatically via a signaling server or manually by using the signaling1, signaling2
+and signaling3 methods of the OakStreaming instances. OakStreaming instances can seed a video stream by using the create_stream method.
+OakStreaming instances can receive, play back and relay a video stream by using the receive_stream method.
+OakStreaming instances can also (partly) receive a video stream from a Web server via XML HTTP Requests (XHRs).
 </div>
 
 
@@ -1232,7 +1238,9 @@
 
 
 <div class="description">
-    This method tries to receive the video stream described in the Stream_Ticket object.After this method has been called, the OakStreaming instance offers received video data to all OakStreaming instances with whom it is connected.The received video data will be streamed into the first HTML video element of the DOM.
+    This method tries to receive the video stream described in the Stream_Ticket object.
+After this method has been called, the OakStreaming instance offers received video data to all OakStreaming instances with whom it is connected.
+The received video data will be streamed into the first HTML video element of the DOM.
 </div>
 
 

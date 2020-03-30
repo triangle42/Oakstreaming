@@ -12,3 +12,5 @@ web/**/example-application.js.map
 web/**/example-application.js
 web/**/hashValues.sha2
 jasmine-testsuites-build/
+.vs/
+oakstreaming/out/
