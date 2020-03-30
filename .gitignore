@@ -10,5 +10,5 @@ node_modules/
 web/**/index.html
 web/**/example-application.js.map
 web/**/example-application.js
+web/**/hashValues.sha2
 jasmine-testsuites-build/
-jasmine-testsuites-build/*

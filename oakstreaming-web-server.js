@@ -71,8 +71,7 @@ fs.readdir(PATH_TO_VIDEO_FOLDER, function( err, files ){
         });
 
         stream.on('end', function () {
-          var finalHash = hash.digest('hex');
-          console.log("__dirname: " + __dirname);            
+          var finalHash = hash.digest('hex');            
             
           fs.appendFile(HASH_VALUES_FILE_PATH + "/hashValues.sha2", file + "/////" + finalHash + '\n', 
                   function (err){
@@ -83,14 +82,16 @@ fs.readdir(PATH_TO_VIDEO_FOLDER, function( err, files ){
           
           // After this function call, the Web server serves the file.
           // The requester must specify the file he/it wants by its name.
-          app.get(file, function(req, res){
-            res.sendFile(PATH_TO_VIDEO_FOLDER + "/" + file);                 
+          app.get("/" + file, function (req, res) {
+            console.log("Received a request for: " + file);
+            res.sendFile(filePath);                 
           });
 
           // After this function call, the Web server serves the file.
           // The requester must specify the file he/it wants by its SHA-2 hash value. 
-          app.get(finalHash, function(req, res){
-            res.sendFile(PATH_TO_VIDEO_FOLDER + "/" + file);                 
+          app.get("/" + finalHash, function (req, res) {
+            console.log("Received a request for: " + finalHash);
+            res.sendFile(filePath);                 
           });
           
           numberOfFilesToProcess--;               
@@ -136,12 +137,13 @@ function watchDirectory(){
     
     // This event listener gets called whenever a file is added to PATH_TO_VIDEO_FOLDER.
     directoryWatcher.on("add", function(absolutePath){
+      console.log("Configuring that " + absolutePath + " can be served.");
       var fileName = absolutePath.substring(absolutePath.lastIndexOf("/")+1);
       
       // After this app.get function call, the Web server serves the file.
       // The requester must specify the file he/it wants by its name.
       app.get("/" + fileName, function(req, res){
-        console.log("Received a request for: " + "/" + fileName);
+        console.log("Received a request for: " + fileName);
         res.sendFile(absolutePath);
       });
       
@@ -151,7 +153,7 @@ function watchDirectory(){
         // After this app.get function call, the Web server serves the file.
         // The requester must specify the file he/it wants by its hash value.
         app.get("/" + hashValue, function(req, res){
-          console.log("Received a request for: " + "/" + hashValue);
+          console.log("Received a request for: " + hashValue);
           res.sendFile(absolutePath);               
         });
       });
@@ -177,14 +179,20 @@ function watchDirectory(){
     });
     directoryWatcher.on("error", function(error){console.log("The following error happened: " + error)});           
   } else {
-    setTimeOut(watchDirectory, 500);
+    setTimeout(watchDirectory, 500);
   }
-};
+}
 
 watchDirectory();
 
 
 console.log('Current directory: ' + process.cwd());
+
+
+// Receiving of the oakstreaming streamticket
+app.post('/streamticket', function(req, res){
+  
+});
 
 
 // This function call does not implement a feature of the OakStreaming library but 
@@ -272,10 +280,12 @@ app.post('/upload2', function(req, res){
 // The following calls to the app.get function configure the Web server to serve several files.
 
 app.get('/', function(req, res){
+  console.log("Request for index page has been received.");
   res.sendFile(__dirname + '/web/index.html');
 });
 
 app.get('/index.html', function(req, res){
+  console.log("Request for index page has been received.");
   res.sendFile(__dirname + '/web/index.html');
 });
 
@@ -296,28 +306,12 @@ app.get('/uploads/test2.mp4', function(req, res){
   res.sendFile(__dirname + '//uploads/test2.mp4');
 });
 
-app.get("/example_application.js", function(req, res){
-  res.sendFile(__dirname + "/web/" + "example_application.js");
+app.get("/example-application.js", function(req, res){
+  res.sendFile(__dirname + "/web/" + "example-application.js");
 });
 
-app.get("/y-webrtc.es6", function(req, res){
-  res.sendFile(__dirname + "/web/" + "y-webrtc.es6");
-});
-
-app.get("/y-webrtc.js.map", function(req, res){
-  res.sendFile(__dirname + "/web/" + "y-webrtc.js.map");
-});
-
-app.get("/y-webrtc.es6.map", function(req, res){
-  res.sendFile(__dirname + "/web/" + "y-webrtc.es6.map");
-});
-
-app.get("/y-webrtc.js", function(req, res){
-  res.sendFile(__dirname + "/web/" + "y-webrtc.js");
-});
-
-app.get("/example_application.js.map", function(req, res){
-  res.sendFile(__dirname + "/web/" + "example_application.js.map");
+app.get("/example-application.js.map", function(req, res){
+  res.sendFile(__dirname + "/web/" + "example-application.js.map");
 });
 
 

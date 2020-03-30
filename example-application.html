@@ -16,25 +16,29 @@
    </style>
 </head>
 <body>
-<table style="width:90%">
-  <tr>
-    <td id= "A"></th> 
-    <td id= "B"></th>   
-    <td id= "C"></th>
-   </tr>
-   
-   <tr>
-    <td id= "D"></th>
-    <td id= "E"></th> 
-  </tr> 
-
-</table>
+  <table style="width:90%">
+    <tr>
+      <td id= "A"></th> 
+      <td id= "B"></th>   
+      <td id= "C"></th>
+     </tr>
+     
+     <tr>
+      <td id= "D"></th>
+      <td id= "E"></th> 
+    </tr> 
+  </table>
    <input type="file" id="input" onchange="handleFiles(this.files)">
    <video controls autoplay id="myVideo"></video>
-   <script src="./modules/bower-components/yjs/y.js"></script>
-   <script src="./modules/bower-components/y-array/y-array.js"></script>
-   <script src="./modules/bower-components/y-memory/y-memory.js"></script>
-   <script src="./modules/bower-components/y-webrtc/y-webrtc.js"></script>
+   <br><br>
+   <form onsubmit="return consoleStreamTicket()">
+      <label for="streamticketTextInput">Streamticket</label><br>
+      <input type="text" id="streamticketTextInput" name="fname"><br>
+      <input type="submit" value="Submit">
+   </form>
+
+   
+   <script src="https://cdn.socket.io/socket.io-1.4.6.js"></script>
    <script src='example-application.js'></script>
 </body>
 </html>
