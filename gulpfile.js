@@ -25,8 +25,7 @@ var customOpts = {
 };
 var customOpts2 = {
   entries: ['./jasmine-testsuites-help.js'],
-  debug: true,
-  uglify: false
+  debug: true
 };
 var opts = assign({}, watchify.args, customOpts);
 var opts2 = assign({}, watchify.args, customOpts2); 
