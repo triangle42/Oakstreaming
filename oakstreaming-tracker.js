@@ -26,10 +26,9 @@ var tracker = new WebtorrentTracker({
     // are available in `params`.
 
     // For our use case, we allow all torrents.
-    cb(true)
+    cb(null)
 
-    // In addition to returning a boolean (`true` for allowed, `false` for disallowed),
-    // you can return an `Error` object to disallow and provide a custom reason.
+    // In addition to returning a boolean (null for allowed, an Error object for disallowed).
   }
 });
 

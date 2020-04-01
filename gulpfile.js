@@ -14,7 +14,6 @@ var rename = require("gulp-rename");
 var cors = require('cors');
 var pump = require('pump');
 var babelify = require("babelify");
-var combiner = require('stream-combiner2');
 
 
 // Add custom browserify options here.
@@ -74,22 +73,6 @@ function browserifySecondApplication(){
     .pipe(rename("index.js"))
     .pipe(gulp.dest('./secondExampleApplication/'));   
 }
-
-
-gulp.task('test', function() {
-  var combined = combiner.obj([
-    gulp.src('bootstrap/js/*.js'),
-    uglify(),
-    gulp.dest('public/bootstrap')
-  ]);
-
-  // Any errors in the above streams will get caught
-  // by this listener, instead of being thrown:
-  combined.on('error', console.error.bind(console));
-
-  return combined;
-});
-
 
 function errorLog(error){
   console.error.bind(error);
