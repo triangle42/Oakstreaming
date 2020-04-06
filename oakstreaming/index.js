@@ -7,13 +7,9 @@ var ut_pex = require('ut_pex');
 var WebTorrent = require('webtorrent');
 var SimplePeer = require('simple-peer');
 
-
-
 module.exports = OakStreaming;
 
-
-
-function OakStreaming(OakName){
+function OakStreaming(){
   var self = this;
   (function(){  
     var OakName = OakName || Math.floor(Math.random() * Math.pow(10,300) + 1);
@@ -304,25 +300,6 @@ function OakStreaming(OakName){
         
          
         theTorrentSession = webtorrentClient.seed(video_file, seedingOptions, function onSeed(torrent){   
-          /* K42 Maybe I will need this later
-          var torrent_fileAsBlobURL = torrent.torrent_fileBlobURL;
-          var xhr = new XMLHttpRequest();
-          var XHROrMethodEndHappend = false;
-          xhr.open('GET', torrent_fileAsBlobURL, true);
-          xhr.responseType = 'blob';
-          xhr.onload = function(e) {
-            if (this.status == 200) {
-              streamTicket.torrentAsBlob = this.response;
-              if(XHROrMethodEndHappend){
-                callback(streamTicket);
-              } else {
-                XHROrMethodEndHappend = true;
-              }
-            }
-          };
-          xhr.send();
-          */
-          
           
           wtorrentFile = theTorrentSession.files[0];
           streamTicket.torrent_file = torrent.torrentFile.toString('base64');
@@ -336,8 +313,6 @@ function OakStreaming(OakName){
             SIZE_VIDEO_FILE += torrent.files[i].length;
             streamTicket.SIZE_VIDEO_FILE += torrent.files[i].length;
           }
-           
-          // var bufferTorrent = parseTorrent(streamTicket.parsedTorrent); K42
                  
           // If this OakStreaming instance is already connected to another peer, this function calls the callback
           // function, which has been passed to it, immediately. Otherwise, the callback function gets called as soon as
@@ -423,17 +398,9 @@ function OakStreaming(OakName){
         }   
       } else {
         callback(streamTicket);
-        
-        /* K42
-        if(XHROrMethodEndHappend){
-          callback(streamTicket);
-        } else {
-          XHROrMethodEndHappend = true;
-        }
-        */
       }
       
-      /* Nicht löschen!!!
+      /* Do NOT delete! This is needed for evaluation measurements.
       function updateChart(){
         if(theTorrentSession && wtorrentFile){
           document.getElementById("WebTorrent-received").innerHTML = "wtorrentFile.length: " +
@@ -465,7 +432,7 @@ function OakStreaming(OakName){
 
     
     function receive_stream(){    
-      /* This block of code is solely for conducting Technical Evaluations. 
+      /* Do NOT delete! This is needed for evaluation measurements.
       var timeLoadVideoMethodWasCalled = -42;
       var timePlaybackWasStalled = 0;
       var startUpTime = 0;
@@ -495,7 +462,7 @@ function OakStreaming(OakName){
       });
       
       
-      /* This block of code is solely for conducting Technical Evaluations.
+      /* Do NOT delete! This is needed for evaluation measurements.
       htmlVideoTag.onplay = function(){
         console.log("event onplay is thrown");
         play = true;
@@ -513,14 +480,14 @@ function OakStreaming(OakName){
       };
 
       htmlVideoTag.onwaiting = function() {
-        ////console.log("Video is holded at " + (Date.now() - timeLoadVideoMethodWasCalled) + 
-                " miliseconds after loadVideo has been called.");
+        ////console.log("Video has been halted at " + (Date.now() - timeLoadVideoMethodWasCalled) +
+                " milliseconds after loadVideo has been called.");
         lastTimeWhenVideoHolded = Date.now();
       };
 
       htmlVideoTag.onstalled = function() {
         ////console.log("Video is stalled at " + (Date.now() - timeLoadVideoMethodWasCalled) + 
-                " miliseconds after loadVideo has been called.");
+                " milliseconds after loadVideo has been called.");
         lastTimeWhenVideoHolded = Date.now();
       };
         
@@ -760,33 +727,13 @@ function OakStreaming(OakName){
               // WebTorrent network.
               thisRequest.wtorrentStream = wtorrentFile.createReadStream({"start" : 
                       thisRequest.indexNextNeededByte, "end" : endIndexRequest});
-              
-              /*
-              thisRequest.on('end', function(){
-                if(thisRequest.callbackOfMultistream !== null && thisRequest.indexNextNeededByte > 
-                        thisRequest.endSequentialWtorrentReq && thisRequest.indexNextNeededByte < 
-                              thisRequest.videoFileSize){
-                  var endIndexRequest;
-                  if(thisRequest.indexNextNeededByte + WTORRENT_REQUEST_SIZE >= wtorrentFile.length-1){
-                    endIndexRequest = wtorrentFile.length-1;
-                  } else {
-                    endIndexRequest = thisRequest.indexNextNeededByte + WTORRENT_REQUEST_SIZE;
-                  }                
-                  thisRequest.wtorrentStream = wtorrentFile.createReadStream({"start" : thisRequest.indexNextNeededByte, 
-                          "end" : endIndexRequest});
-                  thisRequest.indexNextByteWtorrent = thisRequest.indexNextNeededByte;
-                  thisRequest.wtorrentStream.unpipe();
-                  thisRequest.wtorrentStream.pipe(thisRequest.collectorStreamForWtorrent);
-                }             
-              });
-              */
                  
               // Every videostreamRequestHandler has to save the byte index that it expects next from the WebTorrent
               // network.
               thisRequest.indexNextByteWtorrent = thisRequest.indexNextNeededByte;
               thisRequest.endSequentialWtorrentReq = endIndexRequest;
                  
-              // Data that is received from the sequential byte range request gets immediately pumped into a writeable 
+              // Data that is received from the sequential byte range request gets immediately pumped into a writable 
               // stream called collectorStreamForWtorrent which processes the new data.
               thisRequest.wtorrentStream.pipe(thisRequest.collectorStreamForWtorrent);           
             }
@@ -975,9 +922,7 @@ function OakStreaming(OakName){
           */
           
           if(!checkIfAnswerstreamReady(thisRequest)){ // answerstream is nextAnswerstream
-            if(thisRequest.wtorrentStream){
-              // thisRequest.wtorrentStream.resume();  11.07.16 more a try
-            } else if(wtorrentFile){
+            if(wtorrentFile){
               var endIndexRequest;
               if(thisRequest.indexNextNeededByte + WTORRENT_REQUEST_SIZE - 1 >= wtorrentFile.length-1){
                 endIndexRequest = wtorrentFile.length-1;
@@ -1112,9 +1057,10 @@ function OakStreaming(OakName){
       }   
 
       
-      // The final version of the library should not include this function. This function updates the statistics that 
-      // are shown above the video.
+
       /* Do not delete!
+      The final version of the library should not include this function. This function updates the statistics that
+      are shown above the video.
       function updateChart(){
         if(endStreaming){
           return;
@@ -1396,7 +1342,7 @@ function OakStreaming(OakName){
             return;
           }
           
-          // This if clause checks whether the received chunk contains the the next needed byte.
+          // This if clause checks whether the received chunk contains the next needed byte.
           // If this is the case, the part of the chunk which contains the desired video data
           // gets put into the nextAnswerstream stream. When pushing data into this stream, it
           // returns false if no additional data should be pushed into it.
@@ -1471,44 +1417,6 @@ function OakStreaming(OakName){
             thisRequest.xhrConducted = false;
             return;
           }
-    
-          /*
-          I have commented out this block of code in my attempt to solve the 
-          "example_application.js:14013 Uncaught Error: Data too short" error.
-          if(thisRequest.bytesInAnswerstream > 0 && thisRequest.callbackOfMultistream !== null){
-            thisRequest.nextAnswerstream.push(null);
-            thisRequest.bytesInAnswerstream = 0;
-            var res = thisRequest.nextAnswerstream;
-            thisRequest.nextAnswerstream = new SimpleReadableStream({highWaterMark: MAX_SIZE_ANSWERSTREAM});
-            var theCallbackFunction = thisRequest.callbackOfMultistream;
-            thisRequest.callbackOfMultistream = null;
-            //console.log("xhrEnd: called CB with data out of nextAnswerstream from videostreamRequest number " + 
-                    thisRequest.videostreamRequestNumber);
-            theCallbackFunction(null, res);
-          }
-          */
-         
-          /*
-          Another way to solve the "example_application.js:14013 Uncaught Error: Data too short" error
-          if(!noMoreData){
-            if(thisRequest.indexNextNeededByte < SIZE_VIDEO_FILE && thisRequest.indexNextNeededByte < 
-                    thisRequest.xhrFilesize){
-              if(thisRequest.xhrEndIndex > 0 ){
-                if(thisRequest.indexNextNeededByte < thisRequest.xhrEndIndex){
-                  conductXhr(thisRequest);
-                } else {
-                  thisRequest.xhrConducted = false
-                }
-              } else {
-                conductXhr(thisRequest);
-              }
-            } else {
-              thisRequest.xhrConducted = false;
-            }
-          } else {
-            thisRequest.xhrConducted = false;
-          }
-          */
           
           thisRequest.xhrConducted = false;
           
