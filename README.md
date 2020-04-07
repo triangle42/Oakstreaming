@@ -9,7 +9,7 @@ Peer-assisted delivery denotes a hybrid between peer-to-peer and server delivery
 1. Make sure to have *gulp* globally installed (```npm install -g gulp```)
 2. Install development dependencies: run ```npm install``` in the project folder
 4. Run ```gulp``` in the project folder
-5. Now a Web server delivers the exemplary Web application, which uses the OakStreaming library, at http://localhost:8080
+5. Now the Oakstreaming Web server delivers the exemplary Web application, which uses the OakStreaming library, at http://localhost:8080
 6. After gulp has run successfully, the Jasmine test suites results can be viewed by visiting the URL http://localhost:8888
 
 
@@ -36,9 +36,9 @@ Peer-assisted delivery denotes a hybrid between peer-to-peer and server delivery
 <br><br>
 - The source code of the example application is commented and does not comprise a large number of lines. Therefore, it is probably not a bad idea to change the code in order to experiment with the OakStreaming library.
 <br><br>
-- To use all features of the OakStreaming library, a special Web server is necessary. This Web server can be configured by changing the values of the constants at the beginning of the program code. This Web server can be manually started by running ```node oakstreaming-web-server.js```.
+- To use all features of the OakStreaming library, a special Web server is necessary. This Web server, called Oakstreaming Web server, can be configured by changing the values of the constants at the beginning of the the *oakstreaming-web-server.js* file. This Web server can be manually started by running ```node oakstreaming-web-server.js```.
 <br><br>
-- The Oakstreaming Tracker server can be manually started by running ```node oakstreaming-tracker.js```.
+- The Oakstreaming Torrent Tracker server can be manually started by running ```node oakstreaming-tracker.js```.
 <br><br>
 - If the create_stream method of the OakStreaming library does not get handed over URLs to one or more torrent trackers, it tries to connect to several public WebTorrent tracking servers, which support all functionality needed by the OakStreaming library. The example application only tries to connect to a local torrent tracker.
 <br><br>
