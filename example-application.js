@@ -11,7 +11,7 @@ window.handleFiles = function (files) {
   streamSource = true;
   // files[0] contains the file from the user
   // Maybe useful: webTorrent_trackers: [["wss://tracker.webtorrent.io"]] 
-  oakStreaming.create_stream(files[0], { web_server_URL: "localhost:9912", webTorrent_trackers: ["ws://localhost:8085"]}, function(streamInformationObject){      
+  oakStreaming.create_stream(files[0], { web_server_URL: "localhost:8080", webTorrent_trackers: ["ws://localhost:8085"]}, function(streamInformationObject){      
     console.log(JSON.stringify(streamInformationObject));
   });
 };

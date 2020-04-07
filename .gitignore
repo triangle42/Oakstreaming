@@ -16,3 +16,4 @@ web/**/hashValues.sha2
 jasmine-testsuites-build/
 .vs/
 oakstreaming/out/
+npm-shrinkwrap.json

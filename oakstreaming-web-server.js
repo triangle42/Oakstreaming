@@ -303,7 +303,7 @@ app.get('/uploads/test1.mp4', function(req, res){
 });
 
 app.get('/uploads/test2.mp4', function(req, res){
-  res.sendFile(__dirname + '//uploads/test2.mp4');
+  res.sendFile(__dirname + '/uploads/test2.mp4');
 });
 
 app.get("/example-application.js", function(req, res){

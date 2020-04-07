@@ -12,6 +12,8 @@ var jasmineBrowser = require('gulp-jasmine-browser');
 var rename = require("gulp-rename");
 var pump = require('pump');
 var nodemon = require("gulp-nodemon");
+var gulpMultiProcess = require("gulp-multi-process");
+// var babelify = require("babelify");
 
 // Add custom browserify options here.
 var customOpts = {
@@ -28,8 +30,8 @@ var opts2 = assign({}, watchify.args, customOpts2);
 var b = watchify(browserify(opts));
 var b2 = watchify(browserify(opts2));
 
-gulp.task('browserify', function (cb) { bundle(); cb() });
-gulp.task('browserify2', [], function (cb) { bundle2(); cb() });
+gulp.task('browserify', function (cb) { bundle(); cb(); });
+gulp.task('browserify2', function (cb) { bundle2(); cb(); });
 gulp.task('browserify3', function (cb) { browserifySecondApplication(); cb(); });
 
 b.on('update', bundle); // On any dep update, run the bundler.
@@ -38,9 +40,10 @@ b.on('log', gutil.log); // Output build logs to terminal.
 b2.on('log', gutil.log);
 
 function bundle() {
-  return b.transform("babelify", { presets: ["es2015"] })
+  return b.transform("babelify", { presets: ["es2015"] }) //   babel-preset-es2015
     .bundle()
-    .pipe(source('example-application.js'))
+    .on('error', gutil.log.bind(gutil, 'example-application.js: Browserify Error'))
+    .pipe(source('./example-application.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(sourcemaps.write('./'))
@@ -93,19 +96,23 @@ gulp.task('minify_example_app.html', function () {
   console.log("Uglified and renamed example-application.html");
 });
 
-//gulp.task('web-server', function () {
-//  nodemon({
-//    script: 'oakstreaming-web-server.js',
-//    ext: 'js'
-//  });
-//});
+gulp.task('web-server', function () {
+  nodemon({
+    script: 'oakstreaming-web-server.js',
+    ext: 'js'
+  });
+});
 
-//gulp.task('torrent-tracker', function () {
-//  nodemon({
-//    script: 'oakstreaming-tracker.js',
-//    ext: 'js'
-//  });
-//});
+gulp.task('torrent-tracker', function () {
+  nodemon({
+    script: 'oakstreaming-tracker.js',
+    ext: 'js'
+  });
+});
+
+gulp.task('servers', (cb) => {
+  return gulpMultiProcess(['web-server', 'torrent-tracker'], cb, true);
+});
 
 gulp.task('tests', ['browserify2'], function () {
   return gulp.src(['./jasmine-testsuites-build/jasmine-testsuites-help.js', './jasmine-testsuites.js'])
@@ -125,6 +132,7 @@ gulp.task('watch_production', [], function () {
   gulp.watch('./index.html', ['minify_example_app.html']);
 });
 
+//gulp.task('example2', ['browserify3', 'connect2']);
 
-gulp.task('default', ['browserify', 'browserify2', 'minify_example_app.html']); //  ,'web-server', 'torrent-tracker' , 'tests', 'watch'
-gulp.task('production', ['browserify', 'minify_example_app.html', 'web-server', 'torrent-tracker']); // , 'watch_production'
+gulp.task('default', ['browserify', 'browserify2', 'minify_example_app.html', 'servers', 'tests', 'watch']);
+gulp.task('production', ['browserify', 'minify_example_app.html', 'servers', 'watch_production']);

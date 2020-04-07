@@ -848,7 +848,7 @@ function OakStreaming(){
           }
           */
           
-        if(wtorrentFile){         
+        if (wtorrentFile){         
           var endIndexRequest;
           if(thisRequest.indexNextNeededByte + WTORRENT_REQUEST_SIZE >= wtorrentFile.length-1){
             endIndexRequest = wtorrentFile.length-1;
@@ -922,7 +922,7 @@ function OakStreaming(){
           */
           
           if(!checkIfAnswerstreamReady(thisRequest)){ // answerstream is nextAnswerstream
-            if(wtorrentFile){
+            if (!thisRequest.wtorrentStream && wtorrentFile){
               var endIndexRequest;
               if(thisRequest.indexNextNeededByte + WTORRENT_REQUEST_SIZE - 1 >= wtorrentFile.length-1){
                 endIndexRequest = wtorrentFile.length-1;
