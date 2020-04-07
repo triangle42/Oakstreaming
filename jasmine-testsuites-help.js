@@ -1,6 +1,6 @@
 require('events').EventEmitter.prototype._maxListeners = 20;
 window.OakStreaming = require('./oakstreaming');
-window.http = require('http');
+// window.http = require('http');
 
 document.body = document.createElement("body");
 

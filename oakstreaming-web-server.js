@@ -317,5 +317,5 @@ app.get("/example-application.js.map", function(req, res){
 
   
 http.listen(PORT, function(){
-	console.log('Oakstreaming Web server is running and listening on port ' + PORT);
+	console.log('Oakstreaming Web server is running and listens on port ' + PORT);
 });

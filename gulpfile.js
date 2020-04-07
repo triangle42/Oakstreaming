@@ -43,10 +43,6 @@ function bundle() {
     .pipe(source('example-application.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({ loadMaps: true }))
-
-    // Add transformation tasks to the pipeline here.
-
-    // Writes .map file
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./web/'));
 }
@@ -87,7 +83,6 @@ gulp.task('uglify_example_app.js', ['browserify'], function (cb) {
   );
 });
 
-
 // Uglifies index.html
 gulp.task('minify_example_app.html', function () {
   gulp.src('./example-application.html')
@@ -98,32 +93,19 @@ gulp.task('minify_example_app.html', function () {
   console.log("Uglified and renamed example-application.html");
 });
 
-// start our server and listen for changes
-gulp.task('web-server', function () {
-  nodemon({
-    // the script to run the app
-    script: 'oakstreaming-web-server.js',
-    // this listens to changes in any of these files/routes and restarts the server
-    watch: ["oakstreaming-web-server.js"],
-    ext: 'js'
-  }).on('restart', () => {
-    gulp.src('oakstreaming-web-server.js')
-      .pipe(console.log('Nodemon restart of Oakstreaming Web server.'));
-  });
-});
+//gulp.task('web-server', function () {
+//  nodemon({
+//    script: 'oakstreaming-web-server.js',
+//    ext: 'js'
+//  });
+//});
 
-gulp.task('torrent-tracker', function () {
-  nodemon({
-    // the script to run the app
-    script: 'oakstreaming-tracker.js',
-    // this listens to changes in any of these files/routes and restarts the server
-    watch: ["oakstreaming-tracker.js"],
-    ext: 'js'
-  }).on('restart', () => {
-    gulp.src('oakstreaming-tracker.js')
-      .pipe(console.log('Nodemon restart of Oakstreaming Torrent Tracker'));
-  });
-});
+//gulp.task('torrent-tracker', function () {
+//  nodemon({
+//    script: 'oakstreaming-tracker.js',
+//    ext: 'js'
+//  });
+//});
 
 gulp.task('tests', ['browserify2'], function () {
   return gulp.src(['./jasmine-testsuites-build/jasmine-testsuites-help.js', './jasmine-testsuites.js'])
@@ -132,7 +114,7 @@ gulp.task('tests', ['browserify2'], function () {
 });
 
 
-gulp.task('watch', ['tests'], function () {
+gulp.task('watch', [], function () {
   gulp.watch('./example-application.js', ['browserify']);
   gulp.watch('./jasmine-testsuites.js', ['browserify2', 'tests']);
   gulp.watch('./index.html', ['minify_example_app.html']);
@@ -144,5 +126,5 @@ gulp.task('watch_production', [], function () {
 });
 
 
-gulp.task('default', ['browserify', 'browserify2', 'minify_example_app.html', 'web-server', 'torrent-tracker', 'tests', 'watch']);
-gulp.task('production', ['browserify', 'minify_example_app.html', 'servers', 'watch_production']);
+gulp.task('default', ['browserify', 'browserify2', 'minify_example_app.html']); //  ,'web-server', 'torrent-tracker' , 'tests', 'watch'
+gulp.task('production', ['browserify', 'minify_example_app.html', 'web-server', 'torrent-tracker']); // , 'watch_production'

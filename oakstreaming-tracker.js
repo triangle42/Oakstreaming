@@ -48,7 +48,7 @@ tracker.on('warning', function (err) {
 
 tracker.on('listening', function (){
   // Fires when the WebSocket server is listening.
-  console.log('The OakStreaming tracker is listening on WebSocket port: ' + tracker.ws.address().port);  
+  console.log('The OakStreaming tracker is running and listens on WebSocket port: ' + tracker.ws.address().port);  
 });
 
 
