@@ -13,7 +13,7 @@ var formidable = require('formidable');
 // It could be useful to change this constants sometime.
 
 // Port on which the server should listen.
-var PORT = 9912;
+var PORT = 8080;
 
 // Path to the folder which contains all video files that this Web server should be able to serve via 
 // hash value identification.
@@ -317,5 +317,5 @@ app.get("/example-application.js.map", function(req, res){
 
   
 http.listen(PORT, function(){
-	console.log('Listening on port ' + PORT);
+	console.log('Oakstreaming Web server is running and listening on port ' + PORT);
 });
